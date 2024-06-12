@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacer una Orden</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select, input[type="number"], input[type="text"], button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button[type="submit"] {
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 18px;
+        }
+
+        button[type="button"] {
+            margin-top: 10px;
+            padding: 10px 15px;
+        }
+
+        .loader {
+            display: none;
+            border: 8px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 8px solid #3498db;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hacer una Orden</h1>
+        <form id="orderForm">
+            <label for="pizza">Selecciona tu pizza:</label>
+            <select id="pizza" name="pizza">
+                <option value="Margarita">Margarita</option>
+                <option value="Pepperoni">Pepperoni</option>
+                <option value="Cuatro Quesos">Cuatro Quesos</option>
+            </select>
+            
+            <label for="quantity">Cantidad:</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1">
+            
+            <label for="drink">Bebida:</label>
+            <select id="drink" name="drink">
+                <option value="Agua">Agua</option>
+                <option value="Refresco">Refresco</option>
+                <option value="Jugo">Jugo</option>
+                <option value="Cerveza">Cerveza</option>
+            </select>
+            
+            <label for="side">Complemento:</label>
+            <select id="side" name="side">
+                <option value="Papas fritas">Papas fritas</option>
+                <option value="Ensalada">Ensalada</option>
+                <option value="Aros de cebolla">Aros de cebolla</option>
+                <option value="Alitas de pollo">Alitas de pollo</option>
+            </select>
+            
+            <label for="dessert">Postre:</label>
+            <select id="dessert" name="dessert">
+                <option value="Pastel de chocolate">Pastel de chocolate</option>
+                <option value="Helado">Helado</option>
+                <option value="Tiramisú">Tiramisú</option>
+                <option value="Fruta fresca">Fruta fresca</option>
+            </select>
+            
+            <label for="tableNumber">Número de Mesa:</label>
+            <input type="text" id="tableNumber" name="tableNumber" placeholder="Opcional">
+
+            <label>
+                <input type="checkbox" id="takeaway" name="takeaway">
+                Para llevar
+            </label>
+
+            <button type="submit">Ordenar</button>
+        </form>
+        <button onclick="window.location.href='index.html'" type="button">Volver al Menú Principal</button>
+    </div>
+    <div id="loader" class="loader"></div>
+    <script src="js/app.js"></script>
+</body>
+</html>

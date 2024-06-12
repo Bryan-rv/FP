@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de Órdenes</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Resumen de Órdenes</h1>
+        <div id="orderSummary"></div>
+        <button onclick="window.location.href='index.html'">Volver al Menú Principal</button>
+    </div>
+    <div id="loader" class="loader"></div>
+    <script src="js/app.js"></script>
+    <script>
+        // Función para cargar el resumen de órdenes mediante AJAX
+        function loadOrderSummary() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "api/get_orders.php", true);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var orders = JSON.parse(xhr.responseText);
+                    displayOrderSummary(orders);
+                } else {
+                    console.error("Error al cargar las órdenes: " + xhr.statusText);
+                }
+            };
+
+            xhr.onerror = function() {
+                console.error("Error de red al cargar las órdenes.");
+            };
+
+            xhr.send();
+        }
+
+        // Función para mostrar el resumen de órdenes en la página
+        function displayOrderSummary(orders) {
+            var tableHtml = "<table>" +
+                                "<thead>" +
+                                    "<tr>" +
+                                        "<th>ID</th>" +
+                                        "<th>Pizza</th>" +
+                                        "<th>Cantidad</th>" +
+                                        "<th>Bebida</th>" +
+                                        "<th>Complemento</th>" +
+                                        "<th>Postre</th>" +
+                                        "<th>Número de Mesa / Para Llevar</th>" +
+                                        "<th>Estado de la Orden</th>" +
+                                    "</tr>" +
+                                "</thead>" +
+                                "<tbody>";
+            
+            // Recorrer las órdenes y construir filas de la tabla
+            for (var i = 0; i < orders.length; i++) {
+                var order = orders[i];
+                var orderType = order.takeaway ? "Para Llevar" : ("En Mesa " + order.table_number);
+                var orderStatus = order.completed ? "Completada" : "En Curso";
+
+                tableHtml += "<tr>" +
+                                "<td>" + order.id + "</td>" +
+                                "<td>" + order.pizza + "</td>" +
+                                "<td>" + order.quantity + "</td>" +
+                                "<td>" + order.drink + "</td>" +
+                                "<td>" + order.side + "</td>" +
+                                "<td>" + order.dessert + "</td>" +
+                                "<td>" + orderType + "</td>" +
+                                "<td>" + orderStatus + "</td>" +
+                             "</tr>";
+            }
+
+            tableHtml += "</tbody></table>";
+
+            // Insertar la tabla en el contenedor HTML
+            document.getElementById("orderSummary").innerHTML = tableHtml;
+        }
+
+        // Cargar el resumen de órdenes al cargar la página
+        window.onload = function() {
+            loadOrderSummary();
+        };
+    </script>
+</body>
+</html>
